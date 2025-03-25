@@ -2,3 +2,4 @@ streamlit
 torch
 diffusers
 Pillow
+transformers
