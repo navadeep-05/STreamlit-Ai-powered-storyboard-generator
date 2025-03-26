@@ -8,10 +8,9 @@ import os
 st.title("AI-Powered Storyboard Creator 🎬")
 st.sidebar.header("Customize Storyboard")
 
-# Load the Stable Diffusion model (forcing CPU mode & fixing dtype issue)
-model = StableDiffusionPipeline.from_pretrained("CompVis/stable-diffusion-v1-4")
-model.to("cpu")  # Ensure model is running on CPU
-model.float()  # Convert model weights to float32 (fix dtype issue)
+# Load the Stable Diffusion model in CPU mode
+model = StableDiffusionPipeline.from_pretrained("CompVis/stable-diffusion-v1-4", torch_dtype=torch.float32)  
+model.to("cpu")  # Force CPU mode
 
 # Sidebar Inputs
 prompt = st.text_area("Enter Storyboard Prompt", "A sci-fi spaceship flying through a nebula")
@@ -28,8 +27,9 @@ def generate_image(prompt, black_and_white):
     image_prompt = f"{prompt}, storyboard frame"
     if black_and_white:
         image_prompt += ", black and white"
-    
-    image = model(image_prompt).images[0]  # Generate image
+
+    # Generate image using the pipeline (fix input structure)
+    image = model(prompt).images[0]  
     image_path = os.path.join(output_dir, f"{prompt.replace(' ', '_')}.png")
     image.save(image_path)
     return image_path
