@@ -9,8 +9,8 @@ st.title("AI-Powered Storyboard Creator 🎬")
 st.sidebar.header("Customize Storyboard")
 
 # Move model to GPU for better performance
-model = StableDiffusionPipeline.from_pretrained('CompVis/stable-diffusion-v1-4', torch_dtype=torch.float16)
-model = model.to('cuda')
+model = StableDiffusionPipeline.from_pretrained('CompVis/stable-diffusion-v1-4')
+model = model.to('cpu')  # Force CPU mode
 
 # Sidebar Inputs
 prompt = st.text_area("Enter Storyboard Prompt", "A sci-fi spaceship flying through a nebula")
