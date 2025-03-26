@@ -4,17 +4,18 @@ import torch
 from PIL import Image
 import os
 
-# Load the Stable Diffusion model
+# Streamlit UI
 st.title("AI-Powered Storyboard Creator 🎬")
 st.sidebar.header("Customize Storyboard")
 
-# Move model to GPU for better performance
-model = StableDiffusionPipeline.from_pretrained('CompVis/stable-diffusion-v1-4')
-model = model.to('cpu')  # Force CPU mode
+# Load the Stable Diffusion model (forcing CPU mode & fixing dtype issue)
+model = StableDiffusionPipeline.from_pretrained("CompVis/stable-diffusion-v1-4")
+model.to("cpu")  # Ensure model is running on CPU
+model.float()  # Convert model weights to float32 (fix dtype issue)
 
 # Sidebar Inputs
 prompt = st.text_area("Enter Storyboard Prompt", "A sci-fi spaceship flying through a nebula")
-num_frames = st.slider("Number of Frames", min_value=1, max_value=10, value=3)
+num_frames = st.slider("Number of Frames", min_value=1, max_value=5, value=3)
 image_quality = st.radio("Image Quality", ["Low", "Medium", "High"], index=1)
 black_and_white = st.checkbox("Black and White")
 
@@ -28,7 +29,7 @@ def generate_image(prompt, black_and_white):
     if black_and_white:
         image_prompt += ", black and white"
     
-    image = model(image_prompt).images[0]
+    image = model(image_prompt).images[0]  # Generate image
     image_path = os.path.join(output_dir, f"{prompt.replace(' ', '_')}.png")
     image.save(image_path)
     return image_path
