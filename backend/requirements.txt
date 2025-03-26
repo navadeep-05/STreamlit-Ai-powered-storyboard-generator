@@ -1,5 +1,8 @@
 streamlit
 torch
+torchvision
+torchaudio
 diffusers
-Pillow
 transformers
+accelerate
+Pillow
