@@ -9,7 +9,7 @@ st.title("AI-Powered Storyboard Creator 🎬")
 st.sidebar.header("Customize Storyboard")
 
 # Load the Stable Diffusion model in CPU mode
-model = StableDiffusionPipeline.from_pretrained("CompVis/stable-diffusion-v1-4", torch_dtype=torch.float32)  
+model = StableDiffusionPipeline.from_pretrained("runwayml/stable-diffusion-v1-5", torch_dtype=torch.float32)
 model.to("cpu")  # Force CPU mode
 
 # Sidebar Inputs
