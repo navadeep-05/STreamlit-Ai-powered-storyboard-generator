@@ -5,10 +5,18 @@ from PIL import Image
 import os
 import threading
 import time
+import pkg_resources
 
 # Streamlit UI
 st.title("AI-Powered Storyboard Creator 🎬")
 st.sidebar.header("Customize Storyboard")
+
+# Log package versions for debugging
+st.sidebar.write("Debug Info:")
+st.sidebar.write(f"Python Version: {pkg_resources.get_distribution('python').version}")
+st.sidebar.write(f"Streamlit Version: {pkg_resources.get_distribution('streamlit').version}")
+st.sidebar.write(f"Torch Version: {pkg_resources.get_distribution('torch').version}")
+st.sidebar.write(f"Diffusers Version: {pkg_resources.get_distribution('diffusers').version}")
 
 # Check for GPU availability
 device = "cuda" if torch.cuda.is_available() else "cpu"
@@ -42,7 +50,7 @@ image_quality = st.radio("Image Quality", ["Low", "Medium", "High"], index=1)
 black_and_white = st.checkbox("Black and White")
 
 # Map image quality to inference steps (more steps = better quality, but slower)
-quality_to_steps = {"Low": 20, "Medium": 50, "High": 100}
+quality_to_steps = {"Low": 20, "Medium": 50, "High": 50}  # Reduced High to 50 for testing
 num_inference_steps = quality_to_steps[image_quality]
 
 # Output Directory
