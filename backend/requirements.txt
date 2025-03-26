@@ -1,11 +1,11 @@
-streamlit
-torch
+streamlit==1.32.0
+torch==2.3.0
 torchvision
 torchaudio
-diffusers
+diffusers==0.29.2
 transformers
 accelerate
-Pillow
+Pillow==10.3.0
 numpy
 scipy
 requests
