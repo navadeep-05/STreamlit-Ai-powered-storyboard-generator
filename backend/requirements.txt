@@ -6,3 +6,6 @@ diffusers
 transformers
 accelerate
 Pillow
+numpy
+scipy
+requests
